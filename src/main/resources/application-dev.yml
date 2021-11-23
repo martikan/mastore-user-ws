@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: ${DATASOURCE_NAME:jdbc:h2:mem:user}
+    username: ${DATASOURCE_USER:sa}
+    password: ${DATASOURCE_PASSWORD:}
+    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+  jpa:
+    database-platform: ${DATASOURCE_DIALECT:org.hibernate.dialect.H2Dialect}
+  liquibase:
+    enabled: true
+    url: ${DATASOURCE_URL:jdbc:h2:mem:user}
+    user: ${DATASOURCE_USER:sa}
+    password: ${DATASOURCE_PASSWORD:}
+    change-log: classpath:db/changelog/changelog-master.xml
+  h2:
+    console:
+      enabled: true
+      path: /h2
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
