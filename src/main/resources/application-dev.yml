@@ -6,6 +6,7 @@ spring:
     driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
   jpa:
     properties:
+      "[hibernate.format_sql]": true
       "[hibernate.generate_statistics]": true
       "[org.hibernate.envers.audit_table_suffix]": _log
     database-platform: ${DATASOURCE_DIALECT:org.hibernate.dialect.H2Dialect}
