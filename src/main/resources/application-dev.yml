@@ -5,7 +5,11 @@ spring:
     password: ${DATASOURCE_PASSWORD:}
     driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
   jpa:
+    properties:
+      "[hibernate.generate_statistics]": true
+      "[org.hibernate.envers.audit_table_suffix]": _log
     database-platform: ${DATASOURCE_DIALECT:org.hibernate.dialect.H2Dialect}
+    show-sql: true
   liquibase:
     enabled: true
     url: ${DATASOURCE_URL:jdbc:h2:mem:user}
@@ -26,3 +30,12 @@ management:
     web:
       exposure:
         include: '*'
+
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    "[org.springframework.web]": ERROR
+    "[org.martikan.mastore]": DEBUG
+    "[org.hibernate]": DEBUG
