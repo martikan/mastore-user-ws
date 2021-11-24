@@ -3,12 +3,14 @@ package org.martikan.mastore.userapi.dto.user;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.martikan.mastore.userapi.dto.role.RoleDTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * DTO for {@link org.martikan.mastore.userapi.domain.User} entity.
@@ -39,6 +41,8 @@ public class UserDTO implements Serializable {
 
     @Size(max = 20, message = "Phone number cannot be grater then 20 characters.")
     private String phoneNumber;
+
+    private Set<RoleDTO> roles;
 
     private LocalDateTime createdAt;
 

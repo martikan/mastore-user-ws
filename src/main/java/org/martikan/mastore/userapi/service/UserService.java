@@ -4,6 +4,9 @@ import org.martikan.mastore.userapi.dto.user.UserDTO;
 import org.martikan.mastore.userapi.dto.user.UserSignUpDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+/**
+ * Interface for {@link UserServiceImpl}.
+ */
 public interface UserService extends UserDetailsService {
 
     UserDTO signUpUser(final UserSignUpDTO dto);

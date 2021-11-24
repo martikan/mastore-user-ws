@@ -9,13 +9,19 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Entity for `users` table.
@@ -61,6 +67,14 @@ public class User implements Serializable {
 
     @Column
     private Long updatedBy;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "usrs_id"),
+            inverseJoinColumns = @JoinColumn(name = "rols_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
