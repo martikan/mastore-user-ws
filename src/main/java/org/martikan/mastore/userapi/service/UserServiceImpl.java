@@ -7,9 +7,13 @@ import org.martikan.mastore.userapi.dto.user.UserSignUpDTO;
 import org.martikan.mastore.userapi.exception.BadRequestException;
 import org.martikan.mastore.userapi.mapper.UserMapper;
 import org.martikan.mastore.userapi.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 
 /**
  * Service for {@link User} entity.
@@ -42,5 +46,27 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
         newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         return userMapper.toDTO(userRepository.save(newUser));
+    }
+
+    @Override
+    public UserDTO getUserDetailsByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toDTO)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .map(e -> new org.springframework.security.core.userdetails.User(
+                        e.getEmail(),
+                        e.getPassword(),
+                        true,
+                        true,
+                        true,
+                        true,
+                        Collections.emptyList()
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

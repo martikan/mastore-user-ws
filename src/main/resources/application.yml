@@ -31,3 +31,10 @@ management:
   endpoint:
     shutdown:
       enabled: true
+
+#gateway:
+#  ip: 127.0.0.1
+
+token:
+  expiration: ${TOKEN_EXPIRATION}
+  secret: ${TOKEN_SECRET}
