@@ -1,7 +1,6 @@
 package org.martikan.mastore.userapi.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.martikan.mastore.userapi.aspect.IsAdmin;
 import org.martikan.mastore.userapi.domain.RoleName;
 import org.martikan.mastore.userapi.domain.User;
 import org.martikan.mastore.userapi.dto.user.UserDTO;
@@ -10,7 +9,6 @@ import org.martikan.mastore.userapi.exception.BadRequestException;
 import org.martikan.mastore.userapi.mapper.RoleMapper;
 import org.martikan.mastore.userapi.mapper.UserMapper;
 import org.martikan.mastore.userapi.repository.UserRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +19,6 @@ import java.util.Collections;
 /**
  * Service for {@link User} entity.
  */
-@IsAdmin
 @Slf4j
 @Service
 public class UserServiceImpl extends BaseService<User, UserDTO> implements UserService {
@@ -45,7 +42,6 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
         this.roleMapper = roleMapper;
     }
 
-    @PreAuthorize("permitAll()")
     @Override
     public UserDTO signUpUser(final UserSignUpDTO dto) {
 
@@ -62,7 +58,6 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
         return userMapper.toDTO(userRepository.save(newUser));
     }
 
-    @PreAuthorize("isAuthenticated()")
     @Override
     public UserDTO getUserDetailsByEmail(String email) {
         return userRepository.findByEmail(email)
@@ -70,7 +65,6 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
                 .orElseThrow(() -> new UsernameNotFoundException(email));
     }
 
-    @PreAuthorize("permitAll()")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)

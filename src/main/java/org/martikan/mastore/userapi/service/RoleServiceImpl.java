@@ -1,6 +1,5 @@
 package org.martikan.mastore.userapi.service;
 
-import org.martikan.mastore.userapi.aspect.IsAdmin;
 import org.martikan.mastore.userapi.domain.Role;
 import org.martikan.mastore.userapi.domain.RoleName;
 import org.martikan.mastore.userapi.dto.role.RoleDTO;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 /**
  * Service for {@link Role} entity.
  */
-@IsAdmin
 @Service
 public class RoleServiceImpl extends BaseService<Role, RoleDTO> implements RoleService {
 
