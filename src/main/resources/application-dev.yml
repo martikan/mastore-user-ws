@@ -44,3 +44,6 @@ logging:
     "[org.springframework.web]": ERROR
     "[org.martikan.mastore]": DEBUG
     "[org.hibernate]": DEBUG
+
+server:
+  port: ${PORT:8085}

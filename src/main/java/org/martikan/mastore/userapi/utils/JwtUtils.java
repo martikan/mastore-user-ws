@@ -18,7 +18,7 @@ public class JwtUtils {
     @Value("${token.secret}")
     private String secret;
 
-    public String generateToke(final UserDTO userDetails) {
+    public String generateToken(final UserDTO userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getEmail())
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(Objects.requireNonNull(expirationTime))))

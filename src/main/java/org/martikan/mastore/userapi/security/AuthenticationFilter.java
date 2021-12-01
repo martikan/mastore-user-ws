@@ -56,7 +56,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         final var userDetails = userService.getUserDetailsByEmail(username);
 
-        final var token = jwtUtils.generateToke(userDetails);
+        final var token = jwtUtils.generateToken(userDetails);
 
         response.addHeader("token", token);
         response.addHeader("userId", userDetails.getId().toString());

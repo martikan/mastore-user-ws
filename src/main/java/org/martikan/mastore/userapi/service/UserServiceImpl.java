@@ -3,6 +3,7 @@ package org.martikan.mastore.userapi.service;
 import lombok.extern.slf4j.Slf4j;
 import org.martikan.mastore.userapi.domain.RoleName;
 import org.martikan.mastore.userapi.domain.User;
+import org.martikan.mastore.userapi.dto.user.EmailAvailabilityDTO;
 import org.martikan.mastore.userapi.dto.user.UserDTO;
 import org.martikan.mastore.userapi.dto.user.UserSignUpDTO;
 import org.martikan.mastore.userapi.exception.BadRequestException;
@@ -59,14 +60,21 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
     }
 
     @Override
-    public UserDTO getUserDetailsByEmail(String email) {
+    public UserDTO getUserDetailsByEmail(final String email) {
         return userRepository.findByEmail(email)
                 .map(userMapper::toDTO)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public EmailAvailabilityDTO existsUserByEmail(final String email) {
+        return EmailAvailabilityDTO.builder()
+                .emailAvailable(userRepository.existsUserByEmail(email))
+                .build();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .map(e -> new org.springframework.security.core.userdetails.User(
                         e.getEmail(),

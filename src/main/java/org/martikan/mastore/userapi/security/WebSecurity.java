@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * Security configuration.
+ */
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -30,16 +33,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.cors().disable();
-        http.authorizeRequests()
-                .antMatchers("/**")
-                .permitAll()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(getAuthenticationFilter());
-        http.headers().frameOptions().disable();
+        http
+                .cors().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/users/checkEmailAvailability").permitAll()
+                .anyRequest().authenticated().and()
+                .addFilter(getAuthenticationFilter())
+                .headers().frameOptions().disable();
     }
 
     @Override
@@ -50,7 +52,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
 
         final var authenticationFilter = new AuthenticationFilter(userService, jwtUtils);
-        authenticationFilter.setFilterProcessesUrl("/signIn");
+        authenticationFilter.setFilterProcessesUrl("/auth/signIn");
         authenticationFilter.setAuthenticationManager(authenticationManager());
 
         return authenticationFilter;

@@ -2,11 +2,10 @@ package org.martikan.mastore.userapi.controller;
 
 import org.martikan.mastore.userapi.aspect.IsAdmin;
 import org.martikan.mastore.userapi.domain.User;
+import org.martikan.mastore.userapi.dto.user.EmailAvailabilityDTO;
 import org.martikan.mastore.userapi.dto.user.UserDTO;
-import org.martikan.mastore.userapi.dto.user.UserSignUpDTO;
 import org.martikan.mastore.userapi.service.BaseService;
 import org.martikan.mastore.userapi.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,9 +70,9 @@ public class UserController extends BaseController<User, UserDTO> {
     }
 
     @PreAuthorize("permitAll()")
-    @PostMapping("/signUp")
-    public ResponseEntity<UserDTO> signUpUser(@Valid @RequestBody final UserSignUpDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.signUpUser(dto));
+    @PostMapping("/checkEmailAvailability")
+    public ResponseEntity<EmailAvailabilityDTO> checkEmailAvailability(@RequestParam(name = "email") final String email) {
+        return ResponseEntity.ok(userService.existsUserByEmail(email));
     }
 
 }
