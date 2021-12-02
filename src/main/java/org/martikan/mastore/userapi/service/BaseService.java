@@ -6,6 +6,7 @@ import org.martikan.mastore.userapi.mapper.BaseMapper;
 import org.martikan.mastore.userapi.repository.BaseRepository;
 import org.springframework.data.domain.Pageable;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  * @param <T> - Entity.
  * @param <D> - DTO.
  */
+@Transactional
 @RequiredArgsConstructor
 public abstract class BaseService<T, D> {
 

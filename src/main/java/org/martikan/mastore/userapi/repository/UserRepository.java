@@ -13,4 +13,6 @@ public interface UserRepository extends BaseRepository<User> {
 
     Optional<User> findByEmail(final String email);
 
+    boolean existsUserByEmail(final String email);
+
 }

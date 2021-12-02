@@ -7,4 +7,8 @@
     <include file="create_table_users.xml" relativeToChangelogFile="true"/>
     <include file="insert_admin_to_users.xml" relativeToChangelogFile="true"/>
 
+    <include file="create_table_roles.xml" relativeToChangelogFile="true"/>
+    <include file="create_table_users_roles.xml" relativeToChangelogFile="true"/>
+    <include file="insert_predefined_roles.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>
