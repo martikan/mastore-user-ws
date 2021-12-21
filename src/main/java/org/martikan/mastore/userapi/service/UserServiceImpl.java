@@ -1,6 +1,7 @@
 package org.martikan.mastore.userapi.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.martikan.mastore.userapi.config.KafkaTopicConfig;
 import org.martikan.mastore.userapi.domain.RoleName;
 import org.martikan.mastore.userapi.domain.User;
 import org.martikan.mastore.userapi.dto.user.EmailAvailabilityDTO;
@@ -34,13 +35,16 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
 
     private final RoleMapper roleMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, BCryptPasswordEncoder passwordEncoder, RoleService roleService, RoleMapper roleMapper) {
+    private final KafkaService kafkaService;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, BCryptPasswordEncoder passwordEncoder, RoleService roleService, RoleMapper roleMapper, KafkaService kafkaService) {
         super(userRepository, userMapper);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
         this.roleMapper = roleMapper;
+        this.kafkaService = kafkaService;
     }
 
     @Override
@@ -56,7 +60,11 @@ public class UserServiceImpl extends BaseService<User, UserDTO> implements UserS
         newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
         newUser.setRoles(Collections.singleton(role));
 
-        return userMapper.toDTO(userRepository.save(newUser));
+        var newUserDTO = userMapper.toDTO(userRepository.save(newUser));
+
+        kafkaService.sendMessage(KafkaTopicConfig.TOPIC_REGISTERED_USERS, newUserDTO);
+
+        return newUserDTO;
     }
 
     @Override
