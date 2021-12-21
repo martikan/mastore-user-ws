@@ -17,7 +17,7 @@ import java.util.List;
  * @param <D> - DTO.
  */
 @RequiredArgsConstructor
-public class BaseController<T, D> {
+public abstract class BaseController<T, D> {
 
     private final BaseService<T, D> service;
 

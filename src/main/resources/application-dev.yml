@@ -35,6 +35,10 @@ management:
       exposure:
         include: '*'
 
+token:
+  expiration: ${TOKEN_EXPIRATION:864000000} # 10 days by default
+  secret: ${TOKEN_SECRET:asdWasdWASGHEt31Sh34As5}
+
 logging:
   pattern:
     console: "%d %-5level %logger : %msg%n"
@@ -43,3 +47,6 @@ logging:
     "[org.springframework.web]": ERROR
     "[org.martikan.mastore]": DEBUG
     "[org.hibernate]": DEBUG
+
+server:
+  port: ${PORT:8085}
