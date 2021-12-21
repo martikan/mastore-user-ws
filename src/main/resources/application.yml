@@ -20,6 +20,9 @@ spring:
     user: ${DATASOURCE_USER}
     password: ${DATASOURCE_PASSWORD}
     change-log: classpath:db/changelog/changelog-master.xml
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URI}
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${APPLICATION_INSTANCE_ID:${random.uuid}}
