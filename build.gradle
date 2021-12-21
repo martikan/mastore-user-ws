@@ -37,6 +37,7 @@ dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.1.0'
 
+    implementation 'org.springframework.kafka:spring-kafka:2.8.0'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.springframework.boot:spring-boot-starter-security:2.6.0'
