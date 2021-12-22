@@ -29,8 +29,6 @@ eureka:
   client:
     service-url:
       default-zone: ${EUREKA_DEFAULT_ZONE}
-    register-with-eureka: false
-    fetch-registry: false
 
 management:
   endpoint:
