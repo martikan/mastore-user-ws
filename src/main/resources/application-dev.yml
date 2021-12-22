@@ -1,21 +1,21 @@
 spring:
   datasource:
-    url: ${DATASOURCE_NAME:jdbc:h2:mem:user}
-    username: ${DATASOURCE_USER:sa}
-    password: ${DATASOURCE_PASSWORD:}
-    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/users?serverTimezone=CET&max_allowed_packet=15728640}
+    username: ${DATASOURCE_USER:users}
+    password: ${DATASOURCE_PASSWORD:aaa}
+    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}
   jpa:
     properties:
       "[hibernate.format_sql]": true
       "[hibernate.generate_statistics]": true
       "[org.hibernate.envers.audit_table_suffix]": _log
-    database-platform: ${DATASOURCE_DIALECT:org.hibernate.dialect.H2Dialect}
+    database-platform: ${DATASOURCE_DIALECT:org.hibernate.dialect.MySQL5InnoDBDialect}
     show-sql: true
   liquibase:
     enabled: true
-    url: ${DATASOURCE_URL:jdbc:h2:mem:user}
-    user: ${DATASOURCE_USER:sa}
-    password: ${DATASOURCE_PASSWORD:}
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/users?serverTimezone=CET&max_allowed_packet=15728640}
+    user: ${DATASOURCE_USER:users}
+    password: ${DATASOURCE_PASSWORD:aaa}
     change-log: classpath:db/changelog/changelog-master.xml
   h2:
     console:
